@@ -1,4 +1,4 @@
-﻿namespace ToDoTutorial;
+﻿namespace ToDoTutorial.Views;
 
 public partial class MainPage : ContentPage
 {
