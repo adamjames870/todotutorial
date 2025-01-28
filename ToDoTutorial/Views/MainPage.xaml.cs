@@ -1,23 +1,20 @@
-﻿namespace ToDoTutorial.Views;
+﻿using ToDoTutorial.ViewModels;
+
+namespace ToDoTutorial.Views;
 
 public partial class MainPage : ContentPage
 {
-    int count = 0;
-
-    public MainPage()
+    public MainPage(MainPageViewModel viewModel)
     {
         InitializeComponent();
+        BindingContext = viewModel;
     }
-
-    private void OnCounterClicked(object sender, EventArgs e)
+    
+    protected async override void OnAppearing()
     {
-        count++;
-
-        if (count == 1)
-            CounterBtn.Text = $"Clicked {count} time";
-        else
-            CounterBtn.Text = $"Clicked {count} times";
-
-        SemanticScreenReader.Announce(CounterBtn.Text);
+        base.OnAppearing();
+        var vm = (BindingContext as MainPageViewModel);
+        await vm?.OnAppearingAsync()!;
     }
+
 }

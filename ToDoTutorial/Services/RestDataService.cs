@@ -27,7 +27,7 @@ public class RestDataService : IDataService
     public async Task<List<ToDo>> GetAllToDosAsync()
     {
         var todos = new List<ToDo>();
-        if (NoConnection) return todos;
+        if (NoInternet) return todos;
 
         var response = await _httpClient.GetAsync($"{_url}/todo");
         if (response.IsSuccessStatusCode)
@@ -46,26 +46,30 @@ public class RestDataService : IDataService
 
     public async Task AddToDoAsync(ToDo toDo)
     {
-        if (NoConnection) return;
-        var json = JsonSerializer.Serialize(toDo, _jsonSerializerOptions);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        if (NoInternet) return;
+        var content = ToDoContentAsync(toDo);
         await _httpClient.PostAsync($"{_url}/todo", content);
     }
 
     public async Task UpdateToDoAsync(ToDo toDo)
     {
-        if (NoConnection) return;
-        var json = JsonSerializer.Serialize(toDo, _jsonSerializerOptions);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        if (NoInternet) return;
+        var content = ToDoContentAsync(toDo);
         await _httpClient.PutAsync($"{_url}/todo/{toDo.Id}", content);
     }
 
     public async Task DeleteToDoAsync(int toDoId)
     {
-        if (NoConnection) return;
+        if (NoInternet) return;
         await _httpClient.DeleteAsync($"{_url}/todo/{toDoId}");
     }
     
-    private static bool NoConnection => Connectivity.Current.NetworkAccess != NetworkAccess.Internet;
+    private static bool NoInternet => Connectivity.Current.NetworkAccess != NetworkAccess.Internet;
+
+    private StringContent ToDoContentAsync(ToDo toDo)
+    {
+        var json = JsonSerializer.Serialize(toDo, _jsonSerializerOptions);
+        return new StringContent(json, Encoding.UTF8, "application/json");
+    }
     
 }
