@@ -12,7 +12,8 @@
 
     <CollectionView
         ItemsSource="{Binding ToDos}" 
-        SelectionMode="None">
+        SelectionMode="Single"
+        Margin="10">
         
         <CollectionView.ItemTemplate> 
             <DataTemplate x:DataType="itemModels:ToDoItemModel">
@@ -28,9 +29,20 @@
                         </SwipeItems>   
                     </SwipeView.RightItems>
                     
-                    <Label Text="{Binding ToDoName}" 
-                           Style="{StaticResource MediumLabel}"/>
-                    
+                    <Border HeightRequest="60"
+                            Padding="15" 
+                            Style="{StaticResource CardView}" >
+                        
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Label Grid.Column="0"
+                                   Text="{Binding ToDoName}"
+                                   Style="{StaticResource LargeLabel}"
+                                   VerticalOptions="Center"/>
+                            <CheckBox Grid.Column="1"
+                                      IsChecked="{Binding Completed}"/>
+                        </Grid>
+                        
+                    </Border>
                 </SwipeView>
             </DataTemplate>
         </CollectionView.ItemTemplate>

@@ -63,6 +63,12 @@ public class RestDataService : IDataService
         if (NoInternet) return;
         await _httpClient.DeleteAsync($"{_url}/todo/{toDoId}");
     }
+
+    public async Task CompleteToDoAsync(int toDoId)
+    {
+        if (NoInternet) return;
+        await _httpClient.PostAsync($"{_url}/todo/complete/{toDoId}", null);
+    }
     
     private static bool NoInternet => Connectivity.Current.NetworkAccess != NetworkAccess.Internet;
 

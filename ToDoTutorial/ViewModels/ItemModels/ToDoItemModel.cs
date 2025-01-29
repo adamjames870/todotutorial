@@ -17,4 +17,15 @@ public class ToDoItemModel(ToDo toDo) : BaseViewModel
         }
     }
     
+    public bool Completed
+    {
+        get => toDo.Completed;
+        set
+        {
+            if (toDo.Completed == value) return;
+            toDo.Completed = value;
+            OnPropertyChanged();
+        }
+    }
+    
 }
