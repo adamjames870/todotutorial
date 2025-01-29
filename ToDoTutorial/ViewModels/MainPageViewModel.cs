@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ToDoTutorial.Services;
 using ToDoTutorial.ViewModels.ItemModels;
+using ToDoTutorial.Views;
 
 namespace ToDoTutorial.ViewModels;
 
@@ -30,9 +31,11 @@ public partial class MainPageViewModel(IDataService dataService) : BaseViewModel
     }
     
     [RelayCommand]
-    public Task GoToToDoDetailsAsync(ToDoItemModel toDoItemModel)
+    public async Task GoToToDoDetailsAsync(ToDoItemModel? toDoItemModel)
     {
-        throw new NotImplementedException();
+        if (toDoItemModel is null) return;
+        await Shell.Current.GoToAsync($"{nameof(ToDoDetailView)}", true,
+            new Dictionary<string, object> { { nameof(toDoItemModel), toDoItemModel } });
     }
     
 }

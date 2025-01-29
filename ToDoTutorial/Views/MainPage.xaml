@@ -13,7 +13,7 @@
     <CollectionView
         ItemsSource="{Binding ToDos}" 
         SelectionMode="Single"
-        Margin="10">
+        Margin="10" >
         
         <CollectionView.ItemTemplate> 
             <DataTemplate x:DataType="itemModels:ToDoItemModel">
@@ -32,6 +32,12 @@
                     <Border HeightRequest="60"
                             Padding="15" 
                             Style="{StaticResource CardView}" >
+                        
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainPageViewModel}},
+                                       Path=GoToToDoDetailsCommand}"
+                                       CommandParameter="{Binding .}"/>
+                        </Border.GestureRecognizers>
                         
                         <Grid ColumnDefinitions="*, Auto">
                             <Label Grid.Column="0"
