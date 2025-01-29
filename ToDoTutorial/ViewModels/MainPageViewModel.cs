@@ -6,15 +6,15 @@ using ToDoTutorial.ViewModels.ItemModels;
 
 namespace ToDoTutorial.ViewModels;
 
-public partial class MainPageViewModel(IDataService dataService) : BaseViewModel
+public partial class MainPageViewModel(IDataService dataService) : BaseViewModel(dataService)
 {
     [ObservableProperty]
     public ObservableCollection<ToDoItemModel> _toDos;
-    
+
     public async Task OnAppearingAsync()
     {
-        var retrievedToDos = await dataService.GetAllToDosAsync();
-        ToDos = new ObservableCollection<ToDoItemModel>(retrievedToDos.Select(t => new ToDoItemModel(t)));
+        var retrievedToDos = await DataService.GetAllToDosAsync();
+        ToDos = new ObservableCollection<ToDoItemModel>(retrievedToDos.Select(t => new ToDoItemModel(t, DataService)));
     }
 
     [RelayCommand]

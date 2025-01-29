@@ -1,8 +1,9 @@
 using ToDoTutorial.Models;
+using ToDoTutorial.Services;
 
 namespace ToDoTutorial.ViewModels.ItemModels;
 
-public class ToDoItemModel(ToDo toDo) : BaseViewModel
+public class ToDoItemModel(ToDo toDo, IDataService dataService) : BaseViewModel(dataService)
 {
     public int Id => toDo.Id;
 
