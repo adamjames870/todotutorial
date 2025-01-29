@@ -11,5 +11,6 @@ public partial class ToDoDetailViewModel(IDataService dataService) : BaseViewMod
     [ObservableProperty] 
     private ToDoItemModel _itemModel = null!;
 
+    public string ToDoTitle => ItemModel.ToDoName;
 
 }
